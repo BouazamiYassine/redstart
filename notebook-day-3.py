@@ -1681,6 +1681,45 @@ def _(mo):
     return
 
 
+@app.cell
+def _(l, np, plt):
+
+
+    # Constants
+    _l = 1.0  # Half-length of the booster
+    _x, _y = 0.0, 0.0  # Center of mass (fixed for visualization)
+
+    # Manual input: Set theta here (in degrees)
+    theta_deg = -150.0  # <-- Change this value to update the plot
+
+    # Convert theta to radians
+    theta_rad = np.deg2rad(theta_deg)
+
+    # Booster endpoints (length = 2l)
+    x_start = _x - l * np.sin(theta_rad)
+    y_start = _y + l * np.cos(theta_rad)
+    x_end = _x + l * np.sin(theta_rad)
+    y_end = _y - l * np.cos(theta_rad)
+
+    # Point h (offset by l/3 from center)
+    h_x = _x - (l/3) * np.sin(theta_rad)
+    h_y = _y + (l/3) * np.cos(theta_rad)
+
+    # Plot
+    plt.figure(figsize=(8, 6))
+    plt.plot([x_start, x_end], [y_start, y_end], 'k-', linewidth=3, label="Booster")
+    plt.plot(_x, _y, 'bo', markersize=10, label="Center (x, y)")
+    plt.plot(h_x, h_y, 'ro', markersize=8, label="Point h")
+
+    # Annotations
+    plt.text(h_x, h_y, '  h', fontsize=12, color='red')
+    plt.text(_x, _y, '  (x, y)', fontsize=12, color='blue')
+
+    # Formatting
+    plt.title(f"Booster Geometry (θ = {theta_deg}°)")       
+    return
+
+
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(
@@ -1690,6 +1729,11 @@ def _(mo):
     Compute $\dot{h}$ as a function of $\dot{x}$, $\dot{y}$, $\theta$ and $\dot{\theta}$ (and constants) and then $\ddot{h}$ as a function of $\theta$ and $z$ (and constants) when the auxiliary system is plugged in the booster.
     """
     )
+    return
+
+
+@app.cell
+def _():
     return
 
 
